@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+
+    .sidenav {
+      height: 100vh;
+      width: 280px;
+      position: fixed;
+      z-index: 1;
+      top: 0;
+      left: 0;
+      background-color: #0058b0;
+      padding-top: 20px;
+      overflow-x: hidden;
+    }
+
+    .sidenav a {
+      padding: 15px 20px;
+      text-decoration: none;
+      font-size: 16px;
+      color: #fff;
+      display: block;
+      transition: 0.3s;
+    }
+
+    .sidenav a:hover {
+      background-color: #007bff;
+    }
+
+    .sidenav h2 {
+      color: #fff;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .main-content {
+      margin-left: 280px;
+      padding: 20px;
+    }
+
+    .top-bar {
+        color: rgb(0, 0, 0);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 2rem;
+      background-color: #ffffff;
+      padding: 15px 30px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      width:100%;
+    
+    }
+
+    .top-bar h2 {
+        margin: 0;
+        font-size: 24px;
+    }
+
+    .top-bar p {
+        margin: 0.5rem 0 0;
+        font-size: 14px;
+        font-weight: normal;
+        color: black;
+    }
+
+    .datetime {
+        text-align: right;
+        font-size: 14px;
+        color: black;
+        font-weight: bold;
+    }
+
+    .well {
+      background-color: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      padding: 2rem;
+      width: 100%;
+      height:auto;
+    }
+
+    .card-title {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+
+    .table th, .table td {
+      text-align: center;
+    }
+
+    .card1 {
+      height: 150px;
+      padding: 20px;
+    }
+
+    .sessions-card {
+      height: 320px;
+      background-color: #ffffff;
+      color: rgb(0, 0, 0);
+      border-radius: 15px;
+      box-shadow: 2px 2px 12px rgba(0,0,0,0.2);
+      text-align: center;
+      font-weight: bold;
+      font-size:25px;
+    }
+    .sessions-card:hover {
+        transform: scale(1.05);
+    }
+
+    .card-large1 {
+      margin-bottom: 30px;
+      height: 440px;
+      padding: 20px;
+    }
+    p{
+      font-size: 20px;
+    }
+    button {
+        background-color: #007bff;
+        color: white;
+        padding: 12px 30px;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        margin-top: 1.5rem;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #0056b3;
+    }
+
+    .logout-btn {
+        background-color: #e63946;
+        margin-top: 0.5rem;
+    }
+
+    #attendancePieChart {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+      margin-bottom: 30px;
+    }
+
+    h4{
+     font-weight:500px;
+     font-size:30px;
+
+    }
+    .attendance-line-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+      width: 90%;
+      max-width: 500px;
+      margin: 20px auto;
+      height: 300px;
+    }
+
+    #attendanceLineChart {
+      height: 290px !important;
+      margin-top: 20px !important;
+    }
+    .card {
+      transition: transform 0.2s ease-in-out;
+      width:100%;
+      margin:0;
+      text-align: center;
+    }
+
+    .card:hover {
+      transform: scale(1.01);
+    }
+
+    .card-header {
+      font-weight: 600;
+      font-size: 20px;
+      
+    }
+
+    /* Summary Cards */
+    .card-body h3 {
+      font-weight: bold;
+      font-size: 20px;
+    }
+
+    .card-title {
+      font-size: 20px;
+      margin-bottom: 0.75rem;
+    }
+
+    /* Table Styling */
+    .table th,
+    .table td {
+      vertical-align: middle;
+    }
+
+    .table-striped > tbody > tr:nth-of-type(odd) {
+      background-color: #f2f2f2;
+    }
+
+    .table-bordered {
+      border: 1px solid #dee2e6;
+    }
+
+    .table thead th {
+      text-align: center;
+    }
+
+    .badge {
+      padding: 0.5em 0.8em;
+      font-size: 0.9rem;
+      border-radius: 8px;
+    }
+
+    /* Form Styling */
+    label {
+      font-weight: 500;
+      margin-bottom: 0.3rem;
+    }
+
+    input.form-control,
+    select.form-control {
+      border-radius: 8px;
+      padding: 0.5rem;
+    }
+
+    button.btn {
+      border-radius: 8px;
+      font-weight: 500;
+    }
+
+    /* Buttons */
+    .btn-outline-success:hover {
+      background-color: #28a745;
+      color: white;
+    }
+
+    .btn-outline-secondary:hover {
+      background-color: #6c757d;
+      color: white;
+    }
+    .task-section {
+      padding: 20px;
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+      margin-top: 30px;
+    }
+
+    .task-section h2 {
+      font-size: 22px;
+      font-weight: 600;
+      margin-bottom: 15px;
+      color: #333;
+    }
+
+    .task-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .task-table th,
+    .task-table td {
+      padding: 12px 15px;
+      border-bottom: 1px solid #e0e0e0;
+      text-align: left;
+      font-size: 14px;
+    }
+
+    .task-table th {
+      background-color: #f5f5f5;
+      color: #555;
+      font-weight: 600;
+    }
+
+    .task-table td {
+      color: #333;
+    }
+
+    .status {
+      padding: 6px 10px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 500;
+      display: inline-block;
+      text-align: center;
+    }
+
+    .status.completed {
+      background-color: #d4edda;
+      color: #155724;
+    }
+
+    .status.pending {
+      background-color: #f8d7da;
+      color: #721c24;
+    }
+
+    .status.in-progress {
+      background-color: #fff3cd;
+      color: #856404;
+    }
+  
+    h2 {
+      font-size:30px;
+      text-align: center;
+      margin-bottom: 3rem;
+
+    }
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .controls input,
+    .controls select {
+      padding: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      outline: none;
+      font-size: 20px;
+      flex: 1 1 200px;
+    }
+    .cards {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      margin: 20px 0;
+    }
+
+    .card {
+      background: linear-gradient(145deg, #ffe082, #ffcc80);
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+      padding: 20px;
+      width: 200px;
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.25);
+    }
+    h2{
+      font-weight: bold;
+      margin-top: 10px;
+      padding:15px;
+    }
+    .card h3 {
+      font-size: 25px;
+      color: #333;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+
+    .card p {
+      font-size: 20px;
+      font-weight: 500;
+      margin: 5px 0;
+      color: #444;
+    }
+
+    /* Optional progress bar */
+    .progress-container {
+      background-color: #f1f1f1;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-top: 10px;
+    }
+
+    .progress-bar {
+      height: 10px;
+      background-color: #4caf50;
+      width: 0%; /* Set dynamically */
+      transition: width 0.4s ease;
+    }
+
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+    thead {
+      background: #4f46e5;
+      color: white;
+       font-size: 18px;
+    }
+    th, td {
+      padding:20px;
+      text-align: left;
+       font-size: 18px;
+    }
+    tbody tr:nth-child(even) {
+      background: #f9fafb;
+    }
+    .status {
+      padding: 0.4rem 0.8rem;
+      border-radius: 20px;
+      font-weight: 600;
+      font-size: 15px;
+      display: inline-block;
+    }
+    .present {
+      background: #d1fae5;
+      color: #065f46;
+    }
+    .absent {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+    .late {
+      background: #fef3c7;
+      color: #92400e;
+    }
+    #roleAttendanceChart{
+      margin-top: -15px;
+    }
+    .dashboard{
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        overflow: hidden;
+        font-family: 'Arial', sans-serif;
+    }
+    .incentive-card {
+        background-color: #ffcf6e;
+        color: rgb(0, 0, 0);
+        border-radius: 15px;
+        box-shadow: 2px 2px 12px rgba(0,0,0,0.2);
+        width: 250px;
+        transition: transform 0.2s;
+        flex: 1;
+    }
+
+    .incentive-card:hover {
+        transform: scale(1.05);
+    }
+
+    /* Responsive Enhancements */
+    @media (max-width: 768px) {
+      .card-body h3 {
+        font-size: 1.5rem;
+      }
+      .card-title {
+        font-size: 0.9rem;
+      }
+      .sidenav {
+      height: 100vh;
+      width:0px;
+    
+    }
+    .top-bar {
+      width:500px;
+      height:150px;
+      margin-right:100px;
+      
+    
+    }
+    .top-bar h2{
+      font-size:25px;
+      text-align: start;
+    }
+
+    .main-content {
+      margin-left: 0px;
+      padding: 0px;
+    }
+    .task-table {
+      width: 30px;
+      border-collapse: collapse;
+      font-family: 'Segoe UI', sans-serif;
+    } 
+    }
+  </style>
+</head>
+<body>
+
+<div class="sidenav">
+  <h2>Admin</h2>
+  <a href="{% url 'admin_dashboard' %}">Dashboard</a>
+  <a href="{% url 'attendance' %}">Attendance</a>
+
+</div>
+
+
+<div class="main-content">
+  <div class="top-bar">
+    <div>
+      <h2>📊 Admin Dashboard - Attendance Overview</h2>
+    </div>
+    <div class="datetime">
+        <span id="currentDate"></span> | <span id="currentTime"></span><br>
+        <a href="{% url 'logout' %}"><button class="logout-btn">Logout</button></a>
+    </div>
+  </div>
+
+  <!-- First row of cards -->
+  <div class="row text-center">
+    <div class="col-sm-4">
+      <div class="well sessions-card">
+        <h4 class="text-center">Today's Attendance</h4>
+        <canvas id="attendancePieChart"></canvas>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="well sessions-card text-center">
+        <h4 class="text-center mb-4">Today's Attendance by Role</h4>
+        <canvas id="roleAttendanceChart"></canvas>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="well card1 text-center">
+        <h4>Present Today</h4>
+        <p>30%</p>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="well card1">
+        <h4>Absent Today</h4>
+        <p>30%</p>
+      </div>
+    </div>
+  </div>
+  
+  
+  <!-- Second row of sessions cards -->
+  <div class="row text-center">
+    <div class="col-sm-8">
+      <div class="well">
+      <h2>Today's Tasks</h2>
+      <table class="task-table">
+      <thead>
+        <tr>
+          <th>S.No</th>
+          <th>Name</th>
+          <th>Role</th>
+          <th>Task</th>
+          <th>Deadline</th>
+          <th>Status</th>
+          <th>Assigned By</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>Ravi Kumar</td>
+          <td>Employee</td>
+          <td>Update documentation</td>
+          <td>2025-05-13</td>
+          <td><span class="status completed">Completed</span></td>
+          <td>Manager A</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>Anita Sharma</td>
+          <td>Trainer</td>
+          <td>Prepare training slides</td>
+          <td>2025-05-14</td>
+          <td><span class="status pending">Pending</span></td>
+          <td>Lead Trainer</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>Vikram Singh</td>
+          <td>Student</td>
+          <td>Submit project demo</td>
+          <td>2025-05-12</td>
+          <td><span class="status in-progress">In Progress</span></td>
+          <td>Trainer B</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td>Meena Patel</td>
+          <td>Employee</td>
+          <td>Client follow-up calls</td>
+          <td>2025-05-15</td>
+          <td><span class="status in-progress">In Progress</span></td>
+          <td>Manager B</td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>Rahul Das</td>
+          <td>Trainer</td>
+          <td>Create assessment report</td>
+          <td>2025-05-13</td>
+          <td><span class="status pending">Pending</span></td>
+          <td>Lead Coordinator</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  </div>
+
+    <div class="col-sm-4">
+      <div class="well card-large1">
+        <h4> Attendance Trend</h4>
+         <canvas id="attendanceLineChart"></canvas>
+      </div>
+    </div>
+  </div>
+     
+  
+  <!-- Graph and leave requests -->
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="well">
+        <h3 class="text-center">Weekly Attendance</h3>
+        <canvas id="attendanceBarChart"></canvas>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="well">
+        <h3 class="text-center">📋 Leave Requests</h3>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Date</th>
+              <th>Reason</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>John Doe</td><td>2025-04-30</td><td>Medical</td></tr>
+            <tr><td>Jane Smith</td><td>2025-04-30</td><td>Personal</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- New Full Width Card Below Leave Requests -->
+    <div class="col-sm-6">
+      <div class="well">
+        <h4 class="text-center">📝 Task Summary</h4>
+        <p><strong>Completed:</strong> 5 tasks</p>
+        <p><strong>Pending:</strong> 3 tasks</p>
+        <p><strong>Upcoming Deadlines:</strong> 2 tasks due today</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="dashboard">
+    <h2>Attendance Dashboard</h2>
+
+    <div class="controls">
+      <input type="date" id="filter-date" />
+      <select id="filter-role">
+        <option value="">All Roles</option>
+        <option value="student">Student</option>
+        <option value="employee">Employee</option>
+        <option value="trainer">Trainer</option>
+      </select>
+      <input type="text" id="search" placeholder="Search by name..." />
+    </div>
+
+    <!-- Cards for graphs and stats -->
+    <div class="cards">
+    <div class="card incentive-card">
+      <h3>Head Office</h3>
+      <p>Total Employees : 20</p>
+      <p>Today Present:14</p>
+    </div>
+    <div class="card incentive-card">
+      <h3>Coimbatore Branch</h3>
+      <p>Total Employees: 18</p>
+      <p>Today Present:12</p>
+    </div>
+    <div class="card incentive-card">
+      <h3>Chennai Branch</h3>
+      <p>Total Employees: 15</p>
+      <p>Today Present: 11</p>
+    </div>
+    <div class="card incentive-card">
+      <h3>Marketing Executives</h3>
+      <p>Total Employees: 10</p>
+      <p>Today Present:9</p>
+    </div>
+    <div class="card incentive-card">
+      <h3>Students</h3>
+      <p>Total Employees: 10</p>
+      <p>Today Present: 9</p>
+    </div>
+  </div>
+
+
+    <!-- Attendance Table -->
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Role</th>
+          <th>Date</th>
+          <th>Check-in</th>
+          <th>Check-out</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody id="attendance-table">
+        <!-- Rows go here -->
+        <tr>
+          <td>Alice Johnson</td>
+          <td>Student</td>
+          <td>2025-05-12</td>
+          <td>09:00 AM</td>
+          <td>04:00 PM</td>
+          <td><span class="status present">Present</span></td>
+        </tr>
+        <tr>
+          <td>Bob Smith</td>
+          <td>Trainer</td>
+          <td>2025-05-12</td>
+          <td>09:45 AM</td>
+          <td>03:00 PM</td>
+          <td><span class="status late">Late</span></td>
+        </tr>
+        <tr>
+          <td>Emily Davis</td>
+          <td>Employee</td>
+          <td>2025-05-12</td>
+          <td>-</td>
+          <td>-</td>
+          <td><span class="status absent">Absent</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+ </div>
+
+<!-- Bootstrap & Chart.js -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+
+  const ctx = document.getElementById('roleAttendanceChart').getContext('2d');
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Faculty', 'Students', 'Employees', 'Marketing Exec'],
+      datasets: [
+        {
+          label: 'Present',
+          data: [12, 90, 18, 5],
+          backgroundColor: 'rgba(54, 162, 235, 0.7)',
+          borderColor: 'rgba(54, 162, 235, 1)',
+          borderWidth: 1,
+          hoverBackgroundColor: 'rgba(54, 162, 235, 0.9)'
+        },
+        {
+          label: 'Absent',
+          data: [3, 10, 2, 1],
+          backgroundColor: 'rgba(255, 99, 132, 0.7)',
+          borderColor: 'rgba(255, 99, 132, 1)',
+          borderWidth: 1,
+          hoverBackgroundColor: 'rgba(255, 99, 132, 0.9)'
+        }
+      ]
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'top',
+          labels: {
+            color: '#333',
+            font: {
+              weight: 'bold'
+            }
+          }
+        },
+        title: {
+          display: true,
+        
+          color: '#222',
+          font: {
+            size: 18,
+            weight: 'bold'
+          }
+        },
+        tooltip: {
+          backgroundColor: '#333',
+          titleColor: '#fff',
+          bodyColor: '#ddd',
+          borderColor: '#777',
+          borderWidth: 1
+        }
+      },
+      scales: {
+        x: {
+          beginAtZero: true,
+          grid: {
+            color: 'rgba(200, 200, 200, 0.2)'
+          },
+          ticks: {
+            color: '#444'
+          }
+        },
+        y: {
+          grid: {
+            color: 'rgba(200, 200, 200, 0.1)'
+          },
+          ticks: {
+            color: '#444',
+            font: {
+              weight: 'bold'
+            }
+          }
+        }
+      }
+    }
+  });
+
+  // PIE CHART
+  const data = {
+  labels: ['Marketing Exec', 'Faculty', 'Data Entry', 'Telecallers', 'Students', 'Animators'],
+  datasets: [{
+    label: 'Attendance Distribution',
+    data: [15, 18, 6, 4, 7, 7],
+    backgroundColor: [
+      '#4CAF50', '#2196F3', '#FF9800', '#9C27B0', '#F44336', '#00BCD4'
+    ],
+    borderColor: '#fff',
+    borderWidth: 2
+  }]
+};
+
+const config = {
+  type: 'pie',
+  data: data,
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        position: 'bottom',
+        labels: {
+          boxWidth: 15,
+          padding: 10,
+        }
+      }
+    }
+  }
+};
+
+new Chart(
+  document.getElementById('attendancePieChart'),
+  config
+);
+
+
+
+  // BAR CHART
+  const barCtx = document.getElementById('attendanceBarChart').getContext('2d');
+  new Chart(barCtx, {
+    type: 'bar',
+    data: {
+      labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri','Sat'],
+      datasets: [{
+        label: 'Attendance',
+        data: [35, 40, 38, 42, 41,32],
+        backgroundColor: '#007bff'
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { display: false }
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: {
+            stepSize: 5
+          }
+        }
+      }
+    }
+  });
+
+  //LINE CHART
+    const ctxLine = document.getElementById('attendanceLineChart').getContext('2d');
+
+  new Chart(ctxLine, {
+    type: 'line',
+    data: {
+      labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+      datasets: [
+        {
+          label: 'Present',
+          data: [80, 82, 78, 85, 88, 84],
+          borderColor: '#4CAF50',
+          backgroundColor: 'rgba(76, 175, 80, 0.2)',
+          tension: 0.4,
+          fill: true,
+          pointBackgroundColor: '#4CAF50',
+          pointRadius: 5,
+          pointHoverRadius: 7
+        },
+        {
+          label: 'Absent',
+          data: [5, 6, 4, 3, 2, 3],
+          borderColor: '#F44336',
+          backgroundColor: 'rgba(244, 67, 54, 0.2)',
+          tension: 0.4,
+          fill: true,
+          pointBackgroundColor: '#F44336',
+          pointRadius: 5,
+          pointHoverRadius: 7
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          position: 'bottom',
+          labels: {
+            boxWidth: 14,
+            font: {
+              size: 14
+            }
+          }
+        },
+        tooltip: {
+          mode: 'index',
+          intersect: false
+        }
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: {
+            stepSize: 10
+          },
+          title: {
+            display: true,
+            text: 'No. of People',
+            font: {
+              size: 14
+            }
+          }
+        },
+        x: {
+          title: {
+            display: true,
+            text: 'Days',
+            font: {
+              size: 14
+            }
+          }
+        }
+      }
+    }
+  });
+  
+
+
+
+  // DATE & TIME
+  function updateDateTime() {
+    const now = new Date();
+    document.getElementById("currentDate").textContent = now.toLocaleDateString();
+    document.getElementById("currentTime").textContent = now.toLocaleTimeString();
+  }
+
+  setInterval(updateDateTime, 1000);
+  updateDateTime(); // Initial call
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,574 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Employee Dashboard</title>
+    <style>
+        body {
+        
+            background-color: #f4f4f9;
+        }
+        h2 {
+            color: #202020;
+        }
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .datetime {
+            font-size:15px;
+            color: #000000;
+            font-weight: bold;
+            text-align: end;
+        }
+        .card {
+            background-color: #fff;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        a.btn {
+            display: inline-block;
+            background-color: #007bff;
+            color: white;
+            padding: 12px 20px;
+            text-decoration: none;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+        a.btn:hover {
+            background-color: #0056b3;
+        }
+        .calendar {
+            margin-top: 20px;
+        }
+        input[type="date"] {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f4f4f9;
+            padding: 40px;
+        }
+        form {
+            background-color: #fff;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            max-width: 500px;
+            margin: auto;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin: 15px 0 5px;
+        }
+        textarea, select, input[type="date"], input[type="submit"] {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+        }
+        input[type="submit"] {
+            background-color: #28a745;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #218838;
+        }
+        p{
+            font-size:15px;
+            text-align:start;
+        }
+        .top h2{
+            text-align: start;
+            color:black;
+        }
+        button{
+            display: inline-block;
+            background-color: #007bff;
+            color: white;
+            padding: 10px 40px;
+            text-decoration: none;
+            border-radius: 8px;
+            margin-top: 15px;
+            border:none;
+            font-size: 18px;
+            margin-left:4rem;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        /* General styling for the table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+table th, table td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+/* Header styling */
+table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}
+
+/* Zebra striping for rows */
+table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+/* Make the table responsive */
+@media (max-width: 768px) {
+    /* Stack the table rows vertically on small screens */
+    table, thead, tbody, th, td, tr {
+        display: block;
+    }
+
+    /* Hide the table header when it's too small */
+    table th {
+        display: none;
+    }
+
+    /* Display each row as a block */
+    table tr {
+        margin-bottom: 15px;
+    }
+
+    table td {
+        display: flex;
+        justify-content:start;
+        border: none;
+    }
+
+    /* Label for each field when it’s on small screens */
+    table td::before {
+        content: attr(data-label);
+        font-weight: bold;
+        display: inline-block;
+        width: 150px;
+    }
+
+    /* Styling for the table cells */
+    table td {
+        display: block;
+        text-align: right;
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+    }
+
+    /* Add a border to separate rows */
+    table tr {
+        border-bottom: 1px solid #ddd;
+        font-weight: bold;
+    }
+}
+.responsive-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.responsive-table th,
+.responsive-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.responsive-table th {
+  background-color: #f2f2f2;
+  text-align: left;
+}
+#profileForm {
+  border: 1px solid #ccc;
+  padding: 20px;
+  border-radius: 8px;
+  background: #f9f9f9;
+}
+.sidenav {
+  width: 250px;
+  height: 100vh;
+  background-color: #2c3e50;
+  padding: 30px 20px;
+  color: white;
+  position: fixed;
+  left: 0;
+  top: 0;
+  overflow-y: auto;
+}
+
+.sidenav h2 {
+  font-size: 25px;
+  margin-bottom: 20px;
+  color: #ecf0f1;
+  text-align: center;
+}
+
+.sidenav ul {
+  list-style: none;
+  padding: 0px;
+}
+
+.sidenav ul li {
+  margin-bottom: 20px;
+ 
+}
+
+.sidenav ul li a {
+  padding: 15px 20px;
+      text-decoration: none;
+      font-size: 16px;
+      color: #fff;
+      display: block;
+      transition: 0.3s;
+       padding:10px;
+}
+
+.sidenav ul li a:hover {
+  background-color: #007bff;
+}
+
+.main-content {
+  margin-left: 270px;
+  width: 86%;
+  padding:0px;
+}
+.dropdown-toggle {
+  display: none;
+  font-size: 22px;
+  cursor: pointer; 
+  background: #2c3e50;
+  color: white;
+  border: none;
+}
+
+.dropdown-menu {
+  list-style-type: none;
+}
+
+.dropdown-menu li a {
+  color: white;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-menu li a:hover {
+  background-color: #34495e;
+}
+
+.main-content {
+  flex: 1;
+  padding: 0px;
+}
+ .top-bar {
+        color: rgb(0, 0, 0);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;  
+      background-color: #ffffff;
+      margin:0;
+      border-radius: 10px;
+      padding:10px;
+      margin-top: 1px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      width:99%;
+    
+    }
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+  body {
+    flex-direction: column;
+  }
+
+  .sidenav {
+    width: 100%;
+    height: auto;
+  }
+
+  .dropdown-toggle {
+    display: block;
+  
+  }
+  .top-bar{
+    margin-top:90px;
+    width:400px;
+    margin-right:50px;
+    
+  }
+  .card{
+    width:380px;
+  }
+  .dropdown-menu {
+    display: none;
+    background-color: #2c3e50;
+    margin: 0;
+    border-top: 1px solid #444;
+  }
+
+  .dropdown-menu.show {
+    display: block;
+  }
+
+
+    .sidenav h2{
+      display:none;
+    }
+    .main-content{
+      padding:0px;
+      margin: 0%;
+    }
+  }
+</style>
+
+</head>
+<body>
+  <nav class="sidenav">
+  <div class="dropdown-toggle" onclick="toggleDropdown()">☰ Employee</div>
+  <h2>Employee</h2>
+  <ul id="dropdown-menu" class="dropdown-menu">
+    <li><a href="#attendance">Mark Attendance</a></li>
+    <li><a href="#history">Attendance History</a></li>
+    <li><a href="#settings">Account Settings</a></li>
+    <li><a href="#tasklist">Today's Task</a></li>
+  </ul>
+</nav>
+
+<div class="main-content">
+    <div class="top-bar">
+        <div class="top">   
+            <h2>👨‍💼 Welcome, {{ request.user.username }}
+                <p>Status:
+                {% if request.user.is_online %}
+                  🟢 Online
+                {% else %}
+                  🔴 Offline
+                {% endif %}
+              </p>
+            </h2>
+      </div>
+ 
+       
+            <div class="datetime">
+                              
+                <span id="currentDate"></span> | <span id="currentTime"></span><br>
+                <a href="{% url 'logout' %}"><button>Logout</button></a>
+            </div>
+        
+    </div>
+
+    <div class="card" id="attendance">
+        <h3>📸 Mark Your Attendance</h3>
+        <p>Use your webcam and location to mark your attendance for today.</p>
+        <button id="markAttendanceBtn">Mark Attendance</button>
+        <form id="attendanceForm"   style="display:none;"method="POST" action="{% url 'mark_attendance' %}">
+            {% csrf_token %}
+            <input type="hidden" name="location" id="location">
+            <button type="submit" style="display:none;" id="submitBtn">Submit</button>
+            <form onsubmit="this.querySelector('button[type=submit]').disabled=true;">
+
+          </form>
+        
+          <script>
+            document.getElementById('markAttendanceBtn').addEventListener('click', () => {
+              if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                  position => {
+                    const lat = position.coords.latitude;
+                    const lon = position.coords.longitude;
+                    document.getElementById('location').value = `${lat},${lon}`;
+                    document.getElementById('submitBtn').click();
+                  },
+                  error => {
+                    alert("Location access is required to mark attendance.");
+                    console.error(error);
+                  }
+                );
+              } else {
+                alert("Geolocation is not supported by your browser.");
+              }
+            });
+          </script>
+    </div>
+
+    <div class="card" id="history">
+        <h3>📅 View Your Attendance History</h3>
+        <p>Check your past attendance records with date and time.</p>
+    
+        <!-- Button to toggle the table -->
+        <button class="btn" onclick="toggleAttendance()">📅 View Records</button>
+    
+        <!-- Attendance table (initially hidden) -->
+        <div id="attendanceTable" style="display: none; margin-top: 15px;">
+            <h2>🕒 Attendance History</h2>
+            <div style="overflow-x:auto;">
+              <table class="responsive-table">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Location</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tbody>
+                    {% for record in user_attendance %}
+                      <tr>
+                        <td>{{ record.date }}</td>
+                        <td>{{ record.time }}</td>
+                        <td>{{ record.display_location }}</td>  <!-- Use display_location here -->
+                      </tr>
+                    {% empty %}
+                      <tr><td colspan="3">No attendance records.</td></tr>
+                    {% endfor %}
+                  </tbody>
+
+                </tbody>
+              </table>
+            </div>
+          </div>
+    </div>
+    
+    <!-- JavaScript to toggle table visibility -->
+    <script>
+        function toggleAttendance() {
+            const table = document.getElementById("attendanceTable");
+            table.style.display = table.style.display === "none" ? "block" : "none";
+        }
+    </script>
+    
+
+    <div class="card" id="settings">
+        <h3>⚙️ Account Settings</h3>
+        <p>Update your profile, password, and personal details.</p>
+        <button onclick="toggleProfileForm()">⚙️ Update Profile</button>
+
+<div id="profileForm" style="display: none; margin-top: 20px;">
+  <form method="post">
+    {% csrf_token %}
+    
+    <label>Username:</label>
+    <input type="text" name="username" value="{{ user.username }}" required><br><br>
+
+    <label>Email:</label>
+    <input type="email" name="email" value="{{ user.email }}"><br><br>
+
+    <label>First Name:</label>
+    <input type="text" name="first_name" value="{{ user.first_name }}"><br><br>
+
+    <label>Last Name:</label>
+    <input type="text" name="last_name" value="{{ user.last_name }}"><br><br>
+
+    <hr><h3>🔐 Change Password (optional)</h3>
+
+    <label>New Password:</label>
+    <input type="password" name="new_password1"><br><br>
+
+    <label>Confirm Password:</label>
+    <input type="password" name="new_password2"><br><br>
+
+    <button type="submit">💾 Save Changes</button>
+  </form>
+</div>
+
+
+<script>
+  function toggleProfileForm() {
+    const form = document.getElementById("profileForm");
+    form.style.display = form.style.display === "none" ? "block" : "none";
+  }
+</script>
+
+                    
+    </div>
+
+
+   <div class="card">
+    <h2>📝 Submit Today's Task</h2>
+    <form method="post" action="">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <label for="task_description">Task Description</label>
+        <textarea id="task_description" name="task_description" rows="4" placeholder="Describe the task in detail..." required></textarea>
+
+        <label for="status">Task Status</label>
+        <select id="status" name="status" required>
+            <option value="pending">🕒 Pending</option>
+            <option value="in_progress">🚧 In Progress</option>
+            <option value="completed">✅ Completed</option>
+        </select>
+
+        <!-- Removed due_date input since you don't want it -->
+
+        <input type="submit" value="Assign / Update Task">
+    </form>
+</div>
+
+<div class="card"  id="tasklist">
+    <h2>📋 Task List</h2>
+    <div style="overflow-x:auto;">
+      <table class="responsive-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Status</th>
+            <th>Created At</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for task in tasks %}
+          <tr>
+            <td>{{ task.user}}</td> <!-- or use task.user.username -->
+            <td>{{ task.task_desc }}</td>            <!-- updated to task_desc -->
+            <td>{{ task.status }}</td>
+            <td>{{ task.created_at|date:"Y-m-d H:i" }}</td>
+          </tr>
+          {% empty %}
+          <tr><td colspan="4">No tasks yet.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+</div>
+</div>
+
+    </div>
+
+    <script>
+        function updateDateTime() {
+            const now = new Date();
+            document.getElementById("currentDate").textContent = now.toLocaleDateString();
+            document.getElementById("currentTime").textContent = now.toLocaleTimeString();
+        }
+
+        setInterval(updateDateTime, 1000);
+        updateDateTime();  // call once immediately
+    </script>
+    <script>
+  function toggleDropdown() {
+    const menu = document.getElementById("dropdown-menu");
+    menu.classList.toggle("show");
+  }
+</script>
+
+</body>
+</html>
